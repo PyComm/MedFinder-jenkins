@@ -46,3 +46,6 @@ venv/
 
 # git
 .git
+
+# ngrok
+ngrok-v3*

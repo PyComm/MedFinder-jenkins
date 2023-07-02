@@ -1,0 +1,14 @@
+authtoken: 2S1xNKfnFJU2O2F7XGOfkOy3Otl_57HR84aqhHvGZ2KctBpK5
+
+tunnels:
+  puerto_8080:
+    addr: 8080
+    proto: http
+  puerto_8000:
+    addr: 8000
+    proto: http
+  puerto_5173:
+    addr: 5173
+    proto: http
+
+version: 2
