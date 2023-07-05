@@ -7,7 +7,7 @@ import time
 
 # Configuración inicial
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--headless")
 
 driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, 10)
@@ -16,6 +16,10 @@ try:
     # Test Case: Open MedicInfo
     driver.get("https://6943-186-78-252-47.ngrok-free.app/")
     driver.maximize_window()
+    
+    # Esperar a que el enlace "Revisa Aquí" sea clicable
+    visit_site_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Visit Site')]")))
+    visit_site_link.click()
 
     # Esperar a que el enlace "Revisa Aquí" sea clicable
     revisa_aqui_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]")))
