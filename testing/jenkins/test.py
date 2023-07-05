@@ -6,7 +6,10 @@ from selenium.webdriver.common.by import By
 import time
 
 # Configuración inicial
-driver = webdriver.Chrome()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--headless")
+
+driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, 10)
 
 # Test Case: Open MedicInfo
