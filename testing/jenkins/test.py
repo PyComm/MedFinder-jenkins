@@ -12,18 +12,27 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, 10)
 
-# Test Case: Open MedicInfo
-driver.get("https://6943-186-78-252-47.ngrok-free.app/")
-driver.maximize_window()
+try:
+    # Test Case: Open MedicInfo
+    driver.get("https://6943-186-78-252-47.ngrok-free.app/")
+    driver.maximize_window()
 
-wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]"))).click()
-wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Información')]"))).click()
-wait.until(EC.element_to_be_clickable((By.XPATH, "//p[contains(text(), 'Credencial')]")))
+    # Esperar a que el enlace "Revisa Aquí" sea clicable
+    revisa_aqui_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]")))
+    revisa_aqui_link.click()
 
-# Capturar captura de pantalla
-driver.save_screenshot("screenshot.png")
+    # Esperar a que el enlace "Información" sea clicable
+    informacion_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Información')]")))
+    informacion_link.click()
 
-time.sleep(5)
+    # Esperar a que el párrafo con texto "Credencial" esté presente en la página
+    credencial_paragraph = wait.until(EC.presence_of_element_located((By.XPATH, "//p[contains(text(), 'Credencial')]")))
 
-# Cerrar el navegador
-driver.quit()
+    # Capturar captura de pantalla
+    driver.save_screenshot("screenshot.png")
+
+    time.sleep(5)
+
+finally:
+    # Cerrar el navegador incluso si se produce una excepción
+    driver.quit()
