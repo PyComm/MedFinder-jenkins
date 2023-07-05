@@ -13,7 +13,7 @@ driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, 10)
 
 # Test Case: Open MedicInfo
-driver.get("http://localhost:5173/")
+driver.get("https://6943-186-78-252-47.ngrok-free.app/")
 driver.maximize_window()
 
 wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]"))).click()
