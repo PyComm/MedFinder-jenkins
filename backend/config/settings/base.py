@@ -20,7 +20,12 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '9715-186-78-235-54.ngrok-free.app']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1', 
+    # NGROK Link BACK
+    '33f3-186-78-252-47.ngrok-free.app'
+    ]
 
 # Users Medic and patient
 

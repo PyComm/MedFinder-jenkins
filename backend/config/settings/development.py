@@ -45,7 +45,8 @@ DATABASES = {
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:5173',
      'http://127.0.0.1:5173',
-     'https://1fb0-186-78-235-54.ngrok-free.app'
+    #  NGROK LINK FRONT
+     'https://6943-186-78-252-47.ngrok-free.app'
 ]
 
 

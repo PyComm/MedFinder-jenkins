@@ -2,4 +2,5 @@ export const DEBUG = true;
 
 export const PROD_URL = "https://fulana.pl.eso.org";
 // export const DEV_URL = 'http://localhost:8000'
-export const DEV_URL = "https://9715-186-78-235-54.ngrok-free.app/";
+// NGROK LINK BACK
+export const DEV_URL = "https://33f3-186-78-252-47.ngrok-free.app";

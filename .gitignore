@@ -49,3 +49,7 @@ venv/
 
 # ngrok
 ngrok-v3*
+
+# chromedriver
+chromedriver*
+google*
