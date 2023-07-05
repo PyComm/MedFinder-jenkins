@@ -1,42 +1,134 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 import time
 
-# Configuración inicial
-chrome_options = webdriver.ChromeOptions()
-
-# chrome_options.add_argument("--headless")
-
-driver = webdriver.Chrome(options=chrome_options)
+# Configuración
+driver = webdriver.Chrome()
 wait = WebDriverWait(driver, 10)
-try:
-    # Test Case: Open MedicInfo
-    driver.get("https://6943-186-78-252-47.ngrok-free.app/")
+
+# Test Cases
+def open_medic_info():
+    driver.get("http://localhost:5173/")
     driver.maximize_window()
-
-    # Esperar a que el enlace "Revisa Aquí" sea clicable
-    visit_site_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Visit Site')]")))
-    driver.execute_script("arguments[0].click();", visit_site_link)
-
-    # Esperar a que el enlace "Revisa Aquí" sea clicable
-    revisa_aqui_link = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Revisa Aquí")))
-    driver.execute_script("arguments[0].click();", revisa_aqui_link)
-
-    # Esperar a que el enlace "Información" sea clicable
-    informacion_link = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Información")))
-    driver.execute_script("arguments[0].click();", informacion_link)
-
-    # Esperar a que el párrafo con texto "Credencial" esté presente en la página
-    credencial_paragraph = wait.until(EC.presence_of_element_located((By.XPATH, "//p[contains(text(), 'Credencial')]")))
-
-    # Capturar captura de pantalla
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Información')]"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//p[contains(text(), 'Credencial')]")))
     driver.save_screenshot("screenshot.png")
+    time.sleep(5)
+    driver.close()
 
-    driver.implicitly_wait(5)
+def valid_create_medic():
+    driver.get("http://localhost:5173/")
+    driver.maximize_window()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Login Administrador')]"))).click()
+    driver.find_element(By.ID, "username").send_keys("brunalga")
+    driver.find_element(By.ID, "password").send_keys("cristian10")
+    driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
+    time.sleep(3)
+    driver.find_element(By.XPATH, "//a[contains(text(),'Crear Médico')]").click()
+    driver.find_element(By.ID, "rut").send_keys("19620033-9")
+    driver.find_element(By.ID, "nombre").send_keys("Cristian")
+    driver.find_element(By.ID, "apellido_P").send_keys("Bruna")
+    driver.find_element(By.ID, "apellido_M").send_keys("Reyes")
+    driver.find_element(By.ID, "edad").send_keys("25")
+    driver.find_element(By.ID, "especialidad").send_keys("Cirujano")
+    driver.find_element(By.ID, "ubicacion").send_keys("https://goo.gl/maps/EJocG2LnmFPJNspj7")
+    driver.find_element(By.ID, "credencial").send_keys("https://www.soundczech.cz/temp/lorem-ipsum.pdf")
+    time.sleep(3)
+    driver.find_element(By.ID, "submit").submit()
+    driver.get("http://localhost:5173/directory")
+    time.sleep(3)
+    driver.close()
 
-finally:
-    # Cerrar el navegador incluso si se produce una excepción
-    driver.quit()
+def invalid_create_medic():
+    driver.get("http://localhost:5173/")
+    driver.maximize_window()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Login Administrador')]"))).click()
+    driver.find_element(By.ID, "username").send_keys("brunalga")
+    driver.find_element(By.ID, "password").send_keys("cristian10")
+    driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
+    time.sleep(3)
+    driver.find_element(By.XPATH, "//a[contains(text(),'Crear Médico')]").click()
+    driver.find_element(By.ID, "rut").send_keys("sdsdf")
+    driver.find_element(By.ID, "nombre").send_keys("234567")
+    driver.find_element(By.ID, "apellido_P").send_keys("@@@@;;;55")
+    driver.find_element(By.ID, "apellido_M").send_keys("345678")
+    driver.find_element(By.ID, "edad").send_keys("100")
+    driver.find_element(By.ID, "especialidad").send_keys("Cirujano")
+    driver.find_element(By.ID, "ubicacion").send_keys("https://goo.gl/maps/EJocG2LnmFPJNspj7")
+    driver.find_element(By.ID, "credencial").send_keys("https://www.soundczech.cz/temp/lorem-ipsum.pdf")
+    time.sleep(3)
+    driver.find_element(By.ID, "submit").submit()
+    driver.get("http://localhost:5173/directory")
+    time.sleep(3)
+    driver.close()
+
+def delete_medic():
+    driver.get("http://localhost:5173/")
+    driver.maximize_window()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Login Administrador')]"))).click()
+    driver.find_element(By.ID, "username").send_keys("brunalga")
+    driver.find_element(By.ID, "password").send_keys("cristian10")
+    driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
+    time.sleep(3)
+    driver.find_element(By.XPATH, "//a[contains(text(),'Ver Médicos')]").click()
+    driver.find_element(By.XPATH, "//button[contains(text(),'Eliminar')]").click()
+    time.sleep(3)
+    driver.switch_to.alert.accept()
+    time.sleep(3)
+    driver.close()
+
+def valid_edit_medic():
+    driver.get("http://localhost:5173/")
+    driver.maximize_window()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Login Administrador')]"))).click()
+    driver.find_element(By.ID, "username").send_keys("brunalga")
+    driver.find_element(By.ID, "password").send_keys("cristian10")
+    driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
+    time.sleep(3)
+    driver.find_element(By.XPATH, "//a[contains(text(),'Ver Médicos')]").click()
+    driver.find_element(By.XPATH, "//a[contains(text(),'Editar')]").click()
+    time.sleep(3)
+    driver.find_element(By.ID, "nombre").clear()
+    driver.find_element(By.ID, "nombre").send_keys("Pedro")
+    driver.find_element(By.ID, "apellido_M").clear()
+    driver.find_element(By.ID, "apellido_M").send_keys("Pascal")
+    time.sleep(3)
+    driver.find_element(By.ID, "submit").submit()
+    time.sleep(3)
+    driver.close()
+
+def edit_without_login():
+    driver.get("http://localhost:5173/EditMedico/3")
+    driver.maximize_window()
+    time.sleep(3)
+    driver.find_element(By.ID, "nombre").clear()
+    driver.find_element(By.ID, "nombre").send_keys("Pedro")
+    driver.find_element(By.ID, "apellido_M").clear()
+    driver.find_element(By.ID, "apellido_M").send_keys("Pascal")
+    time.sleep(3)
+    driver.find_element(By.ID, "submit").submit()
+    driver.get("http://localhost:5173/directory")
+    driver.get("http://localhost:5173/medico/3")
+    time.sleep(3)
+    driver.close()
+
+def use_search():
+    driver.get("http://localhost:5173/")
+    driver.maximize_window()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Revisa Aquí')]"))).click()
+    driver.find_element(By.ID, "search").send_keys("Ped")
+    time.sleep(3)
+    driver.close()
+
+# Ejecución de los Test Cases
+open_medic_info()
+valid_create_medic()
+invalid_create_medic()
+delete_medic()
+valid_edit_medic()
+edit_without_login()
+use_search()
